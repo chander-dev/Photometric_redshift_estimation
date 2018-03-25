@@ -40,7 +40,7 @@ model.add(Dense(4, activation='relu'))
 model.add(Dense(1,activation='sigmoid'))
 model.compile(loss=root_mean_squared_error, optimizer='adam')
 # history= model.fit(X_train,Y_train,nb_epoch=10,shuffle=True,validation_split=0.1)
-history = model.fit(X_train, Y_train, validation_split=0.1, epochs=3)
+history = model.fit(X_train, Y_train, validation_split=0.1, epochs=5)
 # X_fit_train = model.predict(X_train)
 # rms_train = np.mean(np.sqrt((X_fit_train.squeeze() - Y_train) ** 2))
 
@@ -52,20 +52,29 @@ rms_test = np.sqrt(np.mean((X_fit.flatten() - Y_test)**2))
 
 
 # # summarize history for loss
-# plt.plot(history.history['loss'])
-# plt.plot(history.history['val_loss'])
-# plt.title('model loss')
-# plt.ylabel('loss')
-# plt.xlabel('epoch')
-# plt.legend(['train', 'test'], loc='upper left')
-# plt.show()
+plt.plot(history.history['loss'])
+plt.plot(history.history['val_loss'])
+plt.title('model loss')
+plt.ylabel('loss')
+plt.xlabel('epoch')
+plt.legend(['train', 'test'], loc='upper left')
+plt.show()
+
+plt.figure()
 ax = plt.axes()
+axis_lim = np.array([0,0.4])
+plt.scatter(Y_test, X_fit, c='k', lw=0, s=4)
+plt.plot(axis_lim, axis_lim, '--k')
+plt.plot(axis_lim, axis_lim + rms_test, ':r')
+plt.plot(axis_lim, axis_lim - rms_test, ':r')
+plt.xlim(axis_lim)
+plt.ylim(axis_lim)
 
 plt.text(0.99, 0.02, "RMS error = %.2g" % rms_test,
          ha='right', va='bottom', transform=ax.transAxes,
          bbox=dict(ec='w', fc='w'), fontsize=16)
 
-plt.title('ANN Prediction',fontsize=20)
+plt.title('Photo-z: Artificial Neural Network',fontsize=20)
 plt.xlabel(r'$\mathrm{z_{Pred}}$', fontsize=18)
 plt.ylabel(r'$\mathrm{z_{True}}$', fontsize=18)
 plt.show()

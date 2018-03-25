@@ -48,6 +48,8 @@ fig.subplots_adjust(wspace=0.25,
 
 # left panel: plot cross-validation results
 ax = fig.add_subplot(121)
+axis_lim = np.array([0,0.4])
+
 ax.plot(depth, rms_test, '-k', label='validation loss')
 # ax.plot(depth, rms_train, '--k', label='training set')
 ax.legend(loc=1)
@@ -56,7 +58,14 @@ ax.set_xlabel('Number of neighbours',fontsize=18)
 ax.set_ylabel('rms error',fontsize=18)
 
 ax = fig.add_subplot(122)
+
 ax.scatter(Y_test, X_fit_best, s=1, lw=0, c='k')
+ax.plot(axis_lim, axis_lim, '--k')
+ax.plot(axis_lim, axis_lim + rms_test[best_depth], ':r')
+ax.plot(axis_lim, axis_lim - rms_test[best_depth], ':r')
+ax.set_xlim(axis_lim)
+ax.set_ylim(axis_lim)
+
 ax.plot([0, 0.4], [0, 0.4], ':k')
 ax.text(0.03, 0.97, "depth = %i\nrms = %.3f" % (best_depth, rms_test[i_best]),
         ha='left', va='top', transform=ax.transAxes)
