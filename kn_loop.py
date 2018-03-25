@@ -35,7 +35,8 @@ def compute_photoz_forest(depth):
     return rms_test, rms_train, i_best, X_fit_best
 
 
-depth = np.arange(1, 21)
+#depth = np.arange(1, 21)
+depth = np.arange(1,102,5)
 rms_test, rms_train, i_best, X_fit_best = compute_photoz_forest(depth)
 best_depth = depth[i_best]
 
