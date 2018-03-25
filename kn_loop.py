@@ -5,7 +5,7 @@ from sklearn.neighbors import KNeighborsRegressor
 import pandas as pd 
 plt.ion()
 
-path ='/home/chander/Documents/study_material/data_science/project/photometric_redshift/data_redshift.csv'
+path ='data_redshift.csv'
 data =  pd.read_csv(path)
 
 mag = np.vstack([data['modelMag_%s' % f] for f in 'ugriz']).T
@@ -25,8 +25,8 @@ def compute_photoz_forest(depth):
 
         X_fit_train = clf.predict(X_train)
         X_fit = clf.predict(X_test)
-        rms_train[i] = np.mean(np.sqrt((X_fit_train - Y_train) ** 2))
-        rms_test[i] = np.mean(np.sqrt((X_fit - Y_test) ** 2))
+        rms_train[i] = np.sqrt(np.mean((X_fit_train - Y_train) ** 2))
+        rms_test[i] = np.sqrt(np.mean((X_fit - Y_test) ** 2))
 
         if rms_test[i] < rms_test[i_best]:
             i_best = i
@@ -57,7 +57,7 @@ ax.set_ylabel('rms error',fontsize=18)
 
 ax = fig.add_subplot(122)
 ax.scatter(Y_test, X_fit_best, s=1, lw=0, c='k')
-ax.plot([-0.1, 0.4], [-0.1, 0.4], ':k')
+ax.plot([0, 0.4], [0, 0.4], ':k')
 ax.text(0.03, 0.97, "depth = %i\nrms = %.3f" % (best_depth, rms_test[i_best]),
         ha='left', va='top', transform=ax.transAxes)
 ax.set_xlabel(r'$z_{\rm true}$',fontsize=18)

@@ -4,7 +4,7 @@ from matplotlib import pyplot as plt
 from sklearn.model_selection import  train_test_split
 import pandas as pd 
 
-path ='/home/chander/Documents/study_material/data_science/project/photometric_redshift/data_redshift.csv'
+path ='data_redshift.csv'
 data =  pd.read_csv(path)
 
 # put colors in a matrix
@@ -23,10 +23,10 @@ clf = DecisionTreeRegressor()
 clf.fit(X_train, Y_train)
 Y_pred = clf.predict(X_test)
 
-axis_lim = np.array([-0.1,1])
+axis_lim = np.array([0,0.4])
 
 rms = np.sqrt(np.mean((Y_test - Y_pred) ** 2))
-print "RMS error = %.2g" % rms
+# print "RMS error = %.2g" % rms
 
 ax = plt.axes()
 plt.scatter(Y_test, Y_pred, c='k', lw=0, s=4)
